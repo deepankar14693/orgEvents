@@ -8,7 +8,7 @@ export default class EventList extends Component {
       <>
         {events.map((event, index) => {
           return (
-            <EventListItem key={index} event={event} selectEvent={selectEvent} deleteEvent={deleteEvent} />
+            <EventListItem key={event.id} event={event} selectEvent={selectEvent} deleteEvent={deleteEvent} />
           )
         })}
       </>

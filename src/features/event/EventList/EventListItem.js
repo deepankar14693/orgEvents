@@ -31,7 +31,7 @@ class EventListItem extends Component {
             {
               event.attendees && event.attendees.map((attendee, index) => {
                 return (
-                  <EventListAttendee key={index} attendee={attendee} />
+                  <EventListAttendee key={attendee.id} attendee={attendee} />
                 )
               })
             }
