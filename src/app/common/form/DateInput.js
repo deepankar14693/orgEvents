@@ -8,7 +8,7 @@ const DateInput = ({ input, width, type, placeholder, meta: { touched, error }, 
     <Form.Field error={touched && !!error}>
       <DatePicker
         {...rest}
-        placeholder={placeholder}
+        placeholderText={placeholder}
         selected={input.value ? new Date(input.value) : null}
         onChange={input.onChange}
         onBlur={input.onBlur}
