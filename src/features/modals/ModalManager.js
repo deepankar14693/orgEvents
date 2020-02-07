@@ -12,7 +12,7 @@ const modalLookup = {
 
 const mapStateToProps = (state) => ({
   currentModal: state.modals
-})
+})  
 
 const ModalManager = ({ currentModal }) => {
   let renderedModal;
