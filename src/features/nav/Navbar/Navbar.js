@@ -42,10 +42,14 @@ class Navbar extends Component {
             Organize Events
           </Menu.Item>
           <Menu.Item exact name="Events" as={NavLink} to="/events" />
-          <Menu.Item name="People" as={NavLink} to="/people" />
-          <Menu.Item>
-            <Button as={Link} to="/createEvent" floated="right" positive inverted content="Create Event" />
-          </Menu.Item>
+          {authenticated &&
+            <>
+              <Menu.Item name="People" as={NavLink} to="/people" />
+              <Menu.Item>
+                <Button as={Link} to="/createEvent" floated="right" positive inverted content="Create Event" />
+              </Menu.Item>
+            </>
+          }
           {authenticated ? <SignedInMenu signOut={this.handleSignOut} currentUser={auth.currentUser} /> : <SignedOutMenu signIn={this.handleSignIn} register={this.handleRegister} />}
         </Container>
       </Menu>
@@ -54,4 +58,3 @@ class Navbar extends Component {
 }
 
 export default withRouter(connect(mapStateToProps, actions)(Navbar));
-;
