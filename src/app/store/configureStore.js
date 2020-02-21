@@ -13,7 +13,6 @@ export const rrfConfig = {
   useFirestoreForProfile: true
 }
 
-
 /*
 ########section without applyMiddleware(thunk)##########
 */
