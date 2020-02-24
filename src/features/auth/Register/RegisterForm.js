@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Segment, Button, Label } from 'semantic-ui-react';
+import { Form, Segment, Button, Label, Divider } from 'semantic-ui-react';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import TextInput from '../../../app/common/form/TextInput';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import { registerUser } from '../authActions';
 import { withFirestore } from 'react-redux-firebase';
 import { closeModal } from '../../modals/modalActions';
 import { combineValidators, isRequired } from 'revalidate';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 const mapDispatchToProps = {
   registerUser,
@@ -74,6 +75,8 @@ class RegisterForm extends Component {
             <Button disabled={invalid || submitting} fluid size="large" color="teal">
               Register
           </Button>
+            <Divider horizontal>OR</Divider>
+            <SocialLogin />
           </Segment>
         </Form>
       </div>

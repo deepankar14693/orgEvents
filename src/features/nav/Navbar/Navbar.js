@@ -30,7 +30,7 @@ class Navbar extends Component {
 
   handleSignOut = () => {
     // this.props.logout();
-    this.props.firebase.logout();
+    this.props.firebase.logout();     //logout function is in firebase therefore withFirebase HOC is used to get firebase instance 
     this.props.history.push('/');
   }
 

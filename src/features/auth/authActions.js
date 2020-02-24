@@ -66,3 +66,23 @@ export const logout = () => {
     type: SIGN_OUT_USER
   }
 }
+
+/**
+ * 
+ * @param {*} selectedProvider is social login you want to have i.e facebook google github e.t.c
+ */
+export const socialLogin = (selectedProvider) => 
+  async (dispatch, getState, getFirebase) => {
+    const firebase = getFirebase();
+    try {
+      dispatch(closeModal())
+      await firebase.login({
+        provider: selectedProvider,
+        type: 'popup'
+      })
+    }
+    catch (err) {
+      console.log(err.message)
+    }
+  }
+
