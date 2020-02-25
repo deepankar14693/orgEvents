@@ -1,6 +1,7 @@
-import { SubmissionError } from 'redux-form';
+import { SubmissionError, reset } from 'redux-form';
 import { LOGIN_USER, SIGN_OUT_USER } from "./authConstants"
 import { closeModal } from "../modals/modalActions";
+import { toastr } from 'react-redux-toastr';
 
 /*
   Authentication i.e basically register and login is handle by firebase even if you are using firestore as database.
@@ -42,7 +43,6 @@ export const registerUser = user => // if braces are not used then return is imp
     // const firestore = getFirestore();
     try {
       let createdUser = await firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
-      console.log('createdUser', createdUser);
       await createdUser.user.updateProfile({
         displayName: user.displayName
       });
@@ -71,18 +71,41 @@ export const logout = () => {
  * 
  * @param {*} selectedProvider is social login you want to have i.e facebook google github e.t.c
  */
-export const socialLogin = (selectedProvider) => 
+export const socialLogin = (selectedProvider, firestore) =>
   async (dispatch, getState, getFirebase) => {
     const firebase = getFirebase();
     try {
       dispatch(closeModal())
-      await firebase.login({
+      let user = await firebase.login({
         provider: selectedProvider,
         type: 'popup'
       })
+      if (user.additionalUserInfo.isNewUser) {
+        await firestore.set(`users/${user.user.uid}`, {
+          displayName: user.profile.displayName,
+          photoURL: user.profile.avatarUrl,
+          createdAt: firestore.FieldValue.serverTimestamp()
+        })
+      }
     }
     catch (err) {
       console.log(err.message)
     }
   }
 
+export const updatePassword = creds => {
+  return async (dispatch, getState, getFirebase) => {
+    const firebase = getFirebase();
+    const user = firebase.auth().currentUser;
+    try {
+      await user.updatePassword(creds.confirmPassword);
+      await dispatch(reset('accountUpdateForm'));
+      toastr.success('Success', 'Your password has been updated');
+    }
+    catch (err) {
+      throw new SubmissionError({
+        _error: err.message
+      })
+    }
+  }
+}
