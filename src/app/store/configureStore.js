@@ -36,7 +36,7 @@ export const configureStore = () => {
     // reduxFirestore(firebase)
   );
 
-  const store = createStore(rootReducer, composedEnhancer);
+  const store = createStore(rootReducer, composedEnhancer)
 
   return store
 }
