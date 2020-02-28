@@ -43,6 +43,7 @@ export const registerUser = user => // if braces are not used then return is imp
     // const firestore = getFirestore();
     try {
       let createdUser = await firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
+      //when using updateProfile against user object returned by firebase then we're updating the profile in auth part of firebase
       await createdUser.user.updateProfile({
         displayName: user.displayName
       });
